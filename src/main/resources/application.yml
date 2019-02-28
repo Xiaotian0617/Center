@@ -1,0 +1,118 @@
+spring:
+# 有关我们应用程序自定义的设置信息写在这里!!
+  profiles:
+    active: test
+  application:
+    name: 'calculate center'
+    hostname: 'kai'
+    proxy:
+      enable: false
+      ip: "127.0.0.1"
+      port: 1087
+  # kafka
+  kafka:
+    #bootstrap-servers: 13.115.172.56:9092,54.199.145.213:9092,13.231.107.34:9092 #13.231.104.122:9092 #36.255.220.179:9092
+     bootstrap-servers: 192.168.0.21:9092
+    #bootstrap-servers: 47.75.33.177:9092,47.75.176.97:9092,47.75.170.254:9092
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.0.21:3306/blz?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true
+#    url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true
+    username: root
+    password: 123456
+    hikari:
+      connection-timeout: 30000
+      max-lifetime: 60000
+kafka:
+  market:
+    groupid: 'blz-exchange-grp-${random.int[1024,65536]}'
+  groupid: 'lr-exchange-kai'
+  topic:
+    market: 'blz-market-${spring.profiles.active}'
+    marketcap: 'blz-market-cap-${spring.profiles.active}'
+    #groupid: 'blz-exchange-grp-47.75.204.116' #每个应用必须唯一
+    kline: 'blz-kline-${spring.profiles.active}'
+    trade: 'blz-trade-${spring.profiles.active}'
+    websocket: 'blz-market-ws-${spring.profiles.active}'
+    onlykey_conf: 'blz-onlykey-conf-${spring.profiles.active}'
+    info_own: 'blz-info-conf-own-${spring.profiles.active}'
+    rate: 'blz-rate-${spring.profiles.active}'
+    real-trade: 'blz-real-trade-${spring.profiles.active}'
+    first-buy-sell: 'blz-first-buy-sell-${spring.profiles.active}'
+    long-short: 'blz-long-short-${spring.profiles.active}'
+logging:
+  level:
+    root: info
+    com.al.exchange: info
+server:
+  port: 1901
+  compression:
+    enabled: true
+    mime-types: application/json,application/xml,text/html,text/xml,text/plain
+
+security:
+  user:
+    name: root
+    password: admin
+    role: ROOT
+  basic:
+    path: /admin
+    enabled: true
+management:
+  security:
+    enabled: true
+    roles: ROOT
+  port: 19010
+  context-path: /admin
+scheduled:
+  #获取交易所的最新数据信息  并检测
+  exchangetimes: 0/5 * *  * * ?
+  #获取第三方的最新数据信息 并检测
+  thirdtimes: 0/5 * *  * * ?
+  #获取最新的市场信息 根据检验标准
+  finalGetMarket: 1000
+  #获取24小时前时间点最新的一个Market信息
+  last24hourmarket: 0/60 * *  * * ?
+  #获取当日凌晨最新的Market信息
+  lastzerotimemarket: 0 30 * * * ?
+  #计算Market增强信息
+  calculateenhancemarket: 0/60 * *  * * ?
+  #定时保存市值信息到文件
+  savemarketcaptodisk: 0 0/1 * * * ?
+  #定时保存行情信息到文件
+  savemarkettodisk: 40 0/1 * * * ?
+  #定时保存OnlyKey信息到文件
+  saveonlykeytodisk: 55 0/1 * * * ?
+  #计算24小时最高低价
+  calculatehighlow: 0 0/1 * * * ?
+  #计算24小时成交量
+  calculatevolume: 0 0/1 * * * ?
+  #获取当日8时最新的Market信息
+  lasteighttimemarket: 0 30 8 * * ?
+  #同步市值到数据中心
+  ayncMarketCap: 0 0/1 * * * ?
+  #定时计算30天量
+  calc30DayVolume: 0 0 1 * * ?
+websocket:
+  push:
+    market: true
+    marketcap: true
+    kline: true
+  topcoinws:
+    url: 'http://47.97.169.136:1903/'
+   # url: 'http://192.168.31.254:1903/'
+
+fixer:
+  appKey: '27707ad162f6e8e6'
+
+file:
+  path: 'D:/logs/'
+
+onlyKey:
+  update-frequency: 60000
+eliminateExchange: "{'58coin':'58coin','Bitforex':'Bitforex','Bleutrade':'Bleutrade','Iquant':'Iquant','iquant':'iquant','Qryptos':'Qryptos','9coin':'9coin'}"
+real:
+  trade:
+    exchange: 'Binance'
+mybatis:
+  mapper-locations: classpath:mappers/*.xml

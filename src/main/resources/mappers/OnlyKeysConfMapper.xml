@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.al.exchange.dao.mapper.OnlyKeysConfMapper">
+  <resultMap id="BaseResultMap" type="com.al.exchange.dao.domain.OnlyKeysConf">
+    <id column="only_key" jdbcType="VARCHAR" property="onlyKey" />
+    <result column="exchange" jdbcType="VARCHAR" property="exchange" />
+    <result column="symbol" jdbcType="VARCHAR" property="symbol" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="status" jdbcType="CHAR" property="status" />
+    <result column="all_name" jdbcType="VARCHAR" property="allName" />
+    <result column="is_new" jdbcType="BIT" property="isNew" />
+    <result column="kline_from" jdbcType="VARCHAR" property="klineFrom" />
+    <result column="m_kline_conf" jdbcType="INTEGER" property="mKlineConf" />
+    <result column="d_kline_conf" jdbcType="INTEGER" property="dKlineConf" />
+    <result column="price_conf" jdbcType="INTEGER" property="priceConf" />
+    <result column="high_low_conf" jdbcType="INTEGER" property="highLowConf" />
+    <result column="vol_conf" jdbcType="INTEGER" property="volConf" />
+    <result column="utime" jdbcType="TIMESTAMP" property="utime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    only_key, exchange, symbol, unit, status, all_name, is_new, kline_from, m_kline_conf, 
+    d_kline_conf, price_conf, high_low_conf, vol_conf, utime
+  </sql>
+  <select id="selectByExample" parameterType="com.al.exchange.dao.domain.OnlyKeysConfExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from only_keys_conf
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from only_keys_conf
+    where only_key = #{onlyKey,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from only_keys_conf
+    where only_key = #{onlyKey,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.al.exchange.dao.domain.OnlyKeysConfExample">
+    delete from only_keys_conf
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.al.exchange.dao.domain.OnlyKeysConf">
+    insert into only_keys_conf (only_key, exchange, symbol, 
+      unit, status, all_name, 
+      is_new, kline_from, m_kline_conf, 
+      d_kline_conf, price_conf, high_low_conf, 
+      vol_conf, utime)
+    values (#{onlyKey,jdbcType=VARCHAR}, #{exchange,jdbcType=VARCHAR}, #{symbol,jdbcType=VARCHAR}, 
+      #{unit,jdbcType=VARCHAR}, #{status,jdbcType=CHAR}, #{allName,jdbcType=VARCHAR}, 
+      #{isNew,jdbcType=BIT}, #{klineFrom,jdbcType=VARCHAR}, #{mKlineConf,jdbcType=INTEGER}, 
+      #{dKlineConf,jdbcType=INTEGER}, #{priceConf,jdbcType=INTEGER}, #{highLowConf,jdbcType=INTEGER}, 
+      #{volConf,jdbcType=INTEGER}, #{utime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.al.exchange.dao.domain.OnlyKeysConf">
+    insert into only_keys_conf
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="onlyKey != null">
+        only_key,
+      </if>
+      <if test="exchange != null">
+        exchange,
+      </if>
+      <if test="symbol != null">
+        symbol,
+      </if>
+      <if test="unit != null">
+        unit,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="allName != null">
+        all_name,
+      </if>
+      <if test="isNew != null">
+        is_new,
+      </if>
+      <if test="klineFrom != null">
+        kline_from,
+      </if>
+      <if test="mKlineConf != null">
+        m_kline_conf,
+      </if>
+      <if test="dKlineConf != null">
+        d_kline_conf,
+      </if>
+      <if test="priceConf != null">
+        price_conf,
+      </if>
+      <if test="highLowConf != null">
+        high_low_conf,
+      </if>
+      <if test="volConf != null">
+        vol_conf,
+      </if>
+      <if test="utime != null">
+        utime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="onlyKey != null">
+        #{onlyKey,jdbcType=VARCHAR},
+      </if>
+      <if test="exchange != null">
+        #{exchange,jdbcType=VARCHAR},
+      </if>
+      <if test="symbol != null">
+        #{symbol,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=CHAR},
+      </if>
+      <if test="allName != null">
+        #{allName,jdbcType=VARCHAR},
+      </if>
+      <if test="isNew != null">
+        #{isNew,jdbcType=BIT},
+      </if>
+      <if test="klineFrom != null">
+        #{klineFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="mKlineConf != null">
+        #{mKlineConf,jdbcType=INTEGER},
+      </if>
+      <if test="dKlineConf != null">
+        #{dKlineConf,jdbcType=INTEGER},
+      </if>
+      <if test="priceConf != null">
+        #{priceConf,jdbcType=INTEGER},
+      </if>
+      <if test="highLowConf != null">
+        #{highLowConf,jdbcType=INTEGER},
+      </if>
+      <if test="volConf != null">
+        #{volConf,jdbcType=INTEGER},
+      </if>
+      <if test="utime != null">
+        #{utime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.al.exchange.dao.domain.OnlyKeysConfExample" resultType="java.lang.Long">
+    select count(*) from only_keys_conf
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update only_keys_conf
+    <set>
+      <if test="record.onlyKey != null">
+        only_key = #{record.onlyKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exchange != null">
+        exchange = #{record.exchange,jdbcType=VARCHAR},
+      </if>
+      <if test="record.symbol != null">
+        symbol = #{record.symbol,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unit != null">
+        unit = #{record.unit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=CHAR},
+      </if>
+      <if test="record.allName != null">
+        all_name = #{record.allName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isNew != null">
+        is_new = #{record.isNew,jdbcType=BIT},
+      </if>
+      <if test="record.klineFrom != null">
+        kline_from = #{record.klineFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mKlineConf != null">
+        m_kline_conf = #{record.mKlineConf,jdbcType=INTEGER},
+      </if>
+      <if test="record.dKlineConf != null">
+        d_kline_conf = #{record.dKlineConf,jdbcType=INTEGER},
+      </if>
+      <if test="record.priceConf != null">
+        price_conf = #{record.priceConf,jdbcType=INTEGER},
+      </if>
+      <if test="record.highLowConf != null">
+        high_low_conf = #{record.highLowConf,jdbcType=INTEGER},
+      </if>
+      <if test="record.volConf != null">
+        vol_conf = #{record.volConf,jdbcType=INTEGER},
+      </if>
+      <if test="record.utime != null">
+        utime = #{record.utime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update only_keys_conf
+    set only_key = #{record.onlyKey,jdbcType=VARCHAR},
+      exchange = #{record.exchange,jdbcType=VARCHAR},
+      symbol = #{record.symbol,jdbcType=VARCHAR},
+      unit = #{record.unit,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=CHAR},
+      all_name = #{record.allName,jdbcType=VARCHAR},
+      is_new = #{record.isNew,jdbcType=BIT},
+      kline_from = #{record.klineFrom,jdbcType=VARCHAR},
+      m_kline_conf = #{record.mKlineConf,jdbcType=INTEGER},
+      d_kline_conf = #{record.dKlineConf,jdbcType=INTEGER},
+      price_conf = #{record.priceConf,jdbcType=INTEGER},
+      high_low_conf = #{record.highLowConf,jdbcType=INTEGER},
+      vol_conf = #{record.volConf,jdbcType=INTEGER},
+      utime = #{record.utime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.al.exchange.dao.domain.OnlyKeysConf">
+    update only_keys_conf
+    <set>
+      <if test="exchange != null">
+        exchange = #{exchange,jdbcType=VARCHAR},
+      </if>
+      <if test="symbol != null">
+        symbol = #{symbol,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=CHAR},
+      </if>
+      <if test="allName != null">
+        all_name = #{allName,jdbcType=VARCHAR},
+      </if>
+      <if test="isNew != null">
+        is_new = #{isNew,jdbcType=BIT},
+      </if>
+      <if test="klineFrom != null">
+        kline_from = #{klineFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="mKlineConf != null">
+        m_kline_conf = #{mKlineConf,jdbcType=INTEGER},
+      </if>
+      <if test="dKlineConf != null">
+        d_kline_conf = #{dKlineConf,jdbcType=INTEGER},
+      </if>
+      <if test="priceConf != null">
+        price_conf = #{priceConf,jdbcType=INTEGER},
+      </if>
+      <if test="highLowConf != null">
+        high_low_conf = #{highLowConf,jdbcType=INTEGER},
+      </if>
+      <if test="volConf != null">
+        vol_conf = #{volConf,jdbcType=INTEGER},
+      </if>
+      <if test="utime != null">
+        utime = #{utime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where only_key = #{onlyKey,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.al.exchange.dao.domain.OnlyKeysConf">
+    update only_keys_conf
+    set exchange = #{exchange,jdbcType=VARCHAR},
+      symbol = #{symbol,jdbcType=VARCHAR},
+      unit = #{unit,jdbcType=VARCHAR},
+      status = #{status,jdbcType=CHAR},
+      all_name = #{allName,jdbcType=VARCHAR},
+      is_new = #{isNew,jdbcType=BIT},
+      kline_from = #{klineFrom,jdbcType=VARCHAR},
+      m_kline_conf = #{mKlineConf,jdbcType=INTEGER},
+      d_kline_conf = #{dKlineConf,jdbcType=INTEGER},
+      price_conf = #{priceConf,jdbcType=INTEGER},
+      high_low_conf = #{highLowConf,jdbcType=INTEGER},
+      vol_conf = #{volConf,jdbcType=INTEGER},
+      utime = #{utime,jdbcType=TIMESTAMP}
+    where only_key = #{onlyKey,jdbcType=VARCHAR}
+  </update>
+</mapper>

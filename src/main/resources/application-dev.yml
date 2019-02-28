@@ -1,0 +1,42 @@
+spring:
+  kafka:
+    bootstrap-servers: 47.75.116.175:9092
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/blz?useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&autoReconnect=true
+    username: root
+    password: 123456
+    hikari:
+      connection-timeout: 30000
+      max-lifetime: 60000
+  application:
+    hostname: 'yjx'
+    proxy:
+      enable: true
+      ip: "127.0.0.1"
+      port: 1087
+  influxdb:
+   # url: http://47.52.200.152
+    url: http://localhost
+    port: 8086
+    user-name: root
+    password: admin
+    data-base: TopCoinDB
+    retention-policy: autogen
+    gzip: true
+    connect-timeout: 10
+    read-timeout: 30
+    write-timeout: 10
+logging:
+  level:
+    root: info
+    com.al.exchange: debug
+websocket:
+  push:
+    market: false
+    marketcap: false
+    kline: false
+  topcoinws:
+    url: 'http://118.31.73.51:1903/'
+file:
+  path: '/logs/ailu/exchange'
